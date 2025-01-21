@@ -1,0 +1,19 @@
+{
+  "name": "niivue-tinygrad",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && npm run copyMJS && npm run copyWASM",
+    "copyMJS": "cp ./node_modules/onnxruntime-web/dist/*.mjs ./dist/assets/",
+    "copyWASM": "cp ./node_modules/onnxruntime-web/dist/*.wasm ./dist/assets/",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@niivue/niivue": "^0.48.1"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}
