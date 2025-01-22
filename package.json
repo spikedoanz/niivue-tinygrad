@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run copyMJS && npm run copyWASM",
-    "copyMJS": "cp ./node_modules/onnxruntime-web/dist/*.mjs ./dist/assets/",
-    "copyWASM": "cp ./node_modules/onnxruntime-web/dist/*.wasm ./dist/assets/",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {

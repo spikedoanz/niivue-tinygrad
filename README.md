@@ -8,7 +8,7 @@ You can serve a hot-reloadable web page that allows you to interactively modify 
 
 ```bash
 git clone git@github.com:niivue/niivue-tinygrad.git
-cd niivue-onnx
+cd niivue-tinygrad
 npm install
 npm run dev
 ```
@@ -17,6 +17,6 @@ npm run dev
 
 ```bash
 npm run build
-npx http-server dist/
+npx http-server dist/ # or npm run preview
 ```
 
