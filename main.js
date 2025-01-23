@@ -96,26 +96,7 @@ async function main() {
     // run tinygrad inference
     const results = await session(img32);
     // Can be multi-tensor output, but this model only produces a single output
-    const classImg = results[0];
-    // classImg will have one volume per class
-    const nvol = Math.floor(classImg.length / nvox)
-    if ((nvol < 2) || (classImg.length != (nvol * nvox))) {
-      console.log('Fatal error')
-    }
-    // argmax should identify correct class for each voxel
-    const argMaxImg = new Float32Array(nvox)
-    for (let vox = 0; vox < nvox; vox++) {
-      let mxVal = classImg[vox]
-      let mxVol = 0
-      for (let vol = 1; vol <= nvol; vol++) {
-        const val = classImg[vox + (vol * nvox)]
-        if (val > mxVal) {
-          mxVol = vol
-          mxVal = val
-        }
-      }
-      argMaxImg[vox] = mxVol
-    }
+    const argMaxImg = results[0];
     const segmentImg = nv1.cloneVolume(0)
     segmentImg.img = argMaxImg
     segmentImg.hdr.datatypeCode = 16 // = float32
