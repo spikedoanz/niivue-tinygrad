@@ -130,6 +130,18 @@ var<uniform> INFINITY : f32;
   data0[(alu26+3)] = select(0.0f,alu25,(0.0f<alu25));
 }`;
 
+const r_3_3 = `enable f16;
+fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+fn is_nan(v:f32) -> bool { return min(v, 1.0) == 1.0 && max(v, -1.0) == -1.0; }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<i32>;
+@compute @workgroup_size(1) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  data0[0] = 3;
+  data0[1] = 2;
+  data0[2] = 1;
+}`;
+
 const r_5_256_32_4_8_16_5_3_4_3_3 = `enable f16;
 fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 fn is_nan(v:f32) -> bool { return min(v, 1.0) == 1.0 && max(v, -1.0) == -1.0; }
@@ -698,42 +710,122 @@ var<uniform> INFINITY : f32;
   data0[alu8] = (val17+(val22*val16)+(val18*val7)+(val26*val8)+(val30*val9)+(val34*val10));
 }`;
 
+const r_32768_16_1_32_3 = `enable f16;
+fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+fn is_nan(v:f32) -> bool { return min(v, 1.0) == 1.0 && max(v, -1.0) == -1.0; }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx1 = i32(gindex.y); /* 16 */
+  var gidx2 = i32(gindex.z); /* 32768 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var alu0 = (lidx0+(gidx1<<5)+(gidx2<<9));
+  var val0 = data1[alu0];
+  var val1 = data1[(alu0+16777216)];
+  var val2 = data1[(alu0+33554432)];
+  var alu1 = select(val0,val1,(val0<val1));
+  data0[alu0] = select(val2,alu1,(val2<alu1));
+}`;
+
+const r_32768_4_1_32_4_3 = `enable f16;
+fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+fn is_nan(v:f32) -> bool { return min(v, 1.0) == 1.0 && max(v, -1.0) == -1.0; }
+@group(0) @binding(0)
+var<uniform> INFINITY : f32;
+@group(0) @binding(1)var<storage,read_write>data0:array<f32>;
+@group(0) @binding(2)var<storage,read_write>data1:array<f32>;
+@group(0) @binding(3)var<storage,read_write>data2:array<f32>;
+@group(0) @binding(4)var<storage,read_write>data3:array<i32>;
+@compute @workgroup_size(32) fn main(@builtin(workgroup_id) gindex: vec3<u32>,@builtin(local_invocation_id) lindex: vec3<u32>) {
+  var gidx1 = i32(gindex.y); /* 4 */
+  var gidx2 = i32(gindex.z); /* 32768 */
+  var lidx0 = i32(lindex.x); /* 32 */
+  var val0 = data3[0];
+  var val1 = data3[1];
+  var val2 = data3[2];
+  var alu0 = ((gidx1<<7)+(gidx2<<9)+(lidx0<<2));
+  var val3 = data1[alu0];
+  var val4 = data2[alu0];
+  var alu1 = (alu0+1);
+  var val5 = data1[alu1];
+  var val6 = data2[alu1];
+  var alu2 = (alu0+2);
+  var val7 = data1[alu2];
+  var val8 = data2[alu2];
+  var alu3 = (alu0+3);
+  var val9 = data1[alu3];
+  var val10 = data2[alu3];
+  var val11 = data1[(alu0+16777216)];
+  var val12 = data1[(alu0+16777217)];
+  var val13 = data1[(alu0+16777218)];
+  var val14 = data1[(alu0+16777219)];
+  var val15 = data1[(alu0+33554432)];
+  var val16 = data1[(alu0+33554433)];
+  var val17 = data1[(alu0+33554434)];
+  var val18 = data1[(alu0+33554435)];
+  var alu4 = ((i32(((val5!=val6)!=true)))*val0);
+  var alu5 = ((i32(((val7!=val8)!=true)))*val0);
+  var alu6 = ((i32(((val9!=val10)!=true)))*val0);
+  var alu7 = ((i32(((val11!=val4)!=true)))*val1);
+  var alu8 = ((i32(((val12!=val6)!=true)))*val1);
+  var alu9 = ((i32(((val13!=val8)!=true)))*val1);
+  var alu10 = ((i32(((val14!=val10)!=true)))*val1);
+  var alu11 = ((i32(((val15!=val4)!=true)))*val2);
+  var alu12 = ((i32(((val16!=val6)!=true)))*val2);
+  var alu13 = ((i32(((val17!=val8)!=true)))*val2);
+  var alu14 = ((i32(((val18!=val10)!=true)))*val2);
+  var alu15 = ((i32(((val3!=val4)!=true)))*val0);
+  var alu16 = select(alu4,alu8,(alu4<alu8));
+  var alu17 = select(alu5,alu9,(alu5<alu9));
+  var alu18 = select(alu6,alu10,(alu6<alu10));
+  var alu19 = select(alu7,alu15,(alu7<alu15));
+  data0[alu0] = (f32((3-select(alu11,alu19,(alu11<alu19)))));
+  data0[alu1] = (f32((3-select(alu12,alu16,(alu12<alu16)))));
+  data0[alu2] = (f32((3-select(alu13,alu17,(alu13<alu17)))));
+  data0[alu3] = (f32((3-select(alu14,alu18,(alu14<alu18)))));
+}`;
+
 const setupNet = async (device, safetensor) => {
     const metadata = getTensorMetadata(safetensor);
     const infinityBuf = createInfinityUniformBuf(device);
 
-    const layouts=[device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]})]
+    const layouts=[device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]}),device.createBindGroupLayout({entries: [{binding: 0, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'uniform' }}, {binding: 1, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 2, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 3, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } },{binding: 4, visibility: GPUShaderStage.COMPUTE, buffer: { type: 'storage' } }]})]
 
     const buf_0 = createEmptyBuf(device, 335544320);;
     const input0 = createEmptyBuf(device, 67108864);;
-    const buf_1 = createWeightBuf(device, 540, getTensorBuffer(safetensor, metadata['conv_21.weight']));
-    const buf_2 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_21.bias']));
-    const buf_3 = createEmptyBuf(device, 335544320);;
-    const buf_4 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['conv_23.weight']));
-    const buf_5 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_23.bias']));
-    const buf_6 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['conv_25.weight']));
-    const buf_7 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_25.bias']));
-    const buf_8 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['conv_27.weight']));
-    const buf_9 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_27.bias']));
-    const buf_10 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['conv_29.weight']));
-    const buf_11 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_29.bias']));
-    const buf_12 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['conv_31.weight']));
-    const buf_13 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_31.bias']));
-    const buf_14 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['conv_33.weight']));
-    const buf_15 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_33.bias']));
-    const buf_16 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['conv_35.weight']));
-    const buf_17 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_35.bias']));
-    const buf_18 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['conv_37.weight']));
-    const buf_19 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['conv_37.bias']));
-    const output0 = createEmptyBuf(device, 201326592);;
-    const buf_20 = createWeightBuf(device, 60, getTensorBuffer(safetensor, metadata['conv_output.weight']));
-    const buf_21 = createWeightBuf(device, 12, getTensorBuffer(safetensor, metadata['conv_output.bias']));
+    const buf_1 = createWeightBuf(device, 540, getTensorBuffer(safetensor, metadata['convs.0.weight']));
+    const buf_2 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.0.bias']));
+    const buf_3 = createEmptyBuf(device, 12);;
+    const buf_4 = createEmptyBuf(device, 335544320);;
+    const buf_5 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['convs.1.weight']));
+    const buf_6 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.1.bias']));
+    const buf_7 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['convs.2.weight']));
+    const buf_8 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.2.bias']));
+    const buf_9 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['convs.3.weight']));
+    const buf_10 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.3.bias']));
+    const buf_11 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['convs.4.weight']));
+    const buf_12 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.4.bias']));
+    const buf_13 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['convs.5.weight']));
+    const buf_14 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.5.bias']));
+    const buf_15 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['convs.6.weight']));
+    const buf_16 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.6.bias']));
+    const buf_17 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['convs.7.weight']));
+    const buf_18 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.7.bias']));
+    const buf_19 = createWeightBuf(device, 2700, getTensorBuffer(safetensor, metadata['convs.8.weight']));
+    const buf_20 = createWeightBuf(device, 20, getTensorBuffer(safetensor, metadata['convs.8.bias']));
+    const buf_21 = createEmptyBuf(device, 201326592);;
+    const buf_22 = createWeightBuf(device, 60, getTensorBuffer(safetensor, metadata['convs.9.weight']));
+    const buf_23 = createWeightBuf(device, 12, getTensorBuffer(safetensor, metadata['convs.9.bias']));
+    const buf_24 = createEmptyBuf(device, 67108864);;
+    const output0 = createEmptyBuf(device, 67108864);;
 
     const gpuWriteBuffer0 = device.createBuffer({size:input0.size, usage: GPUBufferUsage.COPY_SRC | GPUBufferUsage.MAP_WRITE });
 
     const gpuReadBuffer0 = device.createBuffer({size:output0.size, usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ });
 
-    const kernels = [r_5_256_32_4_8_16_3_4_3_3, r_5_256_32_4_8_16_5_3_4_3_3, r_5_256_32_4_8_16_5_3_4_3_3n1, r_5_256_32_4_8_16_5_3_4_3_3n2, r_5_256_32_4_8_16_5_3_4_3_3n3, r_5_256_32_4_8_16_5_3_4_3_3n2, r_5_256_32_4_8_16_5_3_4_3_3n1, r_5_256_32_4_8_16_5_3_4_3_3, r_5_256_32_4_8_16_5_3_4_3_3n4, r_32768_4_1_32_4_3_5];
+    const kernels = [r_5_256_32_4_8_16_3_4_3_3, r_3_3, r_5_256_32_4_8_16_5_3_4_3_3, r_5_256_32_4_8_16_5_3_4_3_3n1, r_5_256_32_4_8_16_5_3_4_3_3n2, r_5_256_32_4_8_16_5_3_4_3_3n3, r_5_256_32_4_8_16_5_3_4_3_3n2, r_5_256_32_4_8_16_5_3_4_3_3n1, r_5_256_32_4_8_16_5_3_4_3_3, r_5_256_32_4_8_16_5_3_4_3_3n4, r_32768_4_1_32_4_3_5, r_32768_16_1_32_3, r_32768_4_1_32_4_3];
     const pipelines = await Promise.all(kernels.map(async (name, i) => {
       return await device.createComputePipelineAsync({
           layout: device.createPipelineLayout({
@@ -755,15 +847,18 @@ const setupNet = async (device, safetensor) => {
         gpuWriteBuffer0.unmap();
         commandEncoder.copyBufferToBuffer(gpuWriteBuffer0, 0, input0, 0, gpuWriteBuffer0.size);
         addComputePass(device, commandEncoder, pipelines[0], layouts[0], infinityBuf, [buf_0, input0, buf_1, buf_2], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[1], layouts[1], infinityBuf, [buf_3, buf_0, buf_4, buf_5], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[2], layouts[2], infinityBuf, [buf_0, buf_3, buf_6, buf_7], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[3], layouts[3], infinityBuf, [buf_3, buf_0, buf_8, buf_9], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[4], layouts[4], infinityBuf, [buf_0, buf_3, buf_10, buf_11], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[5], layouts[5], infinityBuf, [buf_3, buf_0, buf_12, buf_13], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[6], layouts[6], infinityBuf, [buf_0, buf_3, buf_14, buf_15], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[7], layouts[7], infinityBuf, [buf_3, buf_0, buf_16, buf_17], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[8], layouts[8], infinityBuf, [buf_0, buf_3, buf_18, buf_19], [128, 256, 5]);
-        addComputePass(device, commandEncoder, pipelines[9], layouts[9], infinityBuf, [output0, buf_0, buf_20, buf_21], [1, 4, 32768]);
+        addComputePass(device, commandEncoder, pipelines[1], layouts[1], infinityBuf, [buf_3], [1, 1, 1]);
+        addComputePass(device, commandEncoder, pipelines[2], layouts[2], infinityBuf, [buf_4, buf_0, buf_5, buf_6], [128, 256, 5]);
+        addComputePass(device, commandEncoder, pipelines[3], layouts[3], infinityBuf, [buf_0, buf_4, buf_7, buf_8], [128, 256, 5]);
+        addComputePass(device, commandEncoder, pipelines[4], layouts[4], infinityBuf, [buf_4, buf_0, buf_9, buf_10], [128, 256, 5]);
+        addComputePass(device, commandEncoder, pipelines[5], layouts[5], infinityBuf, [buf_0, buf_4, buf_11, buf_12], [128, 256, 5]);
+        addComputePass(device, commandEncoder, pipelines[6], layouts[6], infinityBuf, [buf_4, buf_0, buf_13, buf_14], [128, 256, 5]);
+        addComputePass(device, commandEncoder, pipelines[7], layouts[7], infinityBuf, [buf_0, buf_4, buf_15, buf_16], [128, 256, 5]);
+        addComputePass(device, commandEncoder, pipelines[8], layouts[8], infinityBuf, [buf_4, buf_0, buf_17, buf_18], [128, 256, 5]);
+        addComputePass(device, commandEncoder, pipelines[9], layouts[9], infinityBuf, [buf_0, buf_4, buf_19, buf_20], [128, 256, 5]);
+        addComputePass(device, commandEncoder, pipelines[10], layouts[10], infinityBuf, [buf_21, buf_0, buf_22, buf_23], [1, 4, 32768]);
+        addComputePass(device, commandEncoder, pipelines[11], layouts[11], infinityBuf, [buf_24, buf_21], [1, 16, 32768]);
+        addComputePass(device, commandEncoder, pipelines[12], layouts[12], infinityBuf, [output0, buf_21, buf_24, buf_3], [1, 4, 32768]);
         commandEncoder.copyBufferToBuffer(output0, 0, gpuReadBuffer0, 0, output0.size);
         const gpuCommands = commandEncoder.finish();
         device.queue.submit([gpuCommands]);
