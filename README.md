@@ -7,7 +7,7 @@
 You can serve a hot-reloadable web page that allows you to interactively modify the source code.
 
 ```bash
-git clone git@github.com:niivue/niivue-tinygrad.git
+git clone git@github.com:spikedoanz/niivue-tinygrad.git
 cd niivue-tinygrad
 npm install
 npm run dev
