@@ -2,6 +2,7 @@ import { Niivue } from '@niivue/niivue'
 // IMPORTANT: we need to import this specific file. 
 import subcortical from "./net_subcortical.js"
 import tissue_fast from "./net_tissue_fast.js"
+import mindgrab from "./net_mindgrab.js"
 import t2 from "./net_t2.js"
 
 const models = {
@@ -15,6 +16,12 @@ const models = {
     "net": tissue_fast,
     "weightPath":
     "./net_tissue_fast.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz"
+  },
+  "mindgrab": {
+    "net": mindgrab,
+    "weightPath": "./net_mindgrab.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz"
   },
