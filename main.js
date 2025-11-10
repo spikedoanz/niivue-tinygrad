@@ -10,31 +10,60 @@ const models = {
     "net": subcortical,
     "weightPath": "./net_subcortical.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
-    "volume": "./t1_crop.nii.gz"
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
   },
   "tissue_fast": {
     "net": tissue_fast,
     "weightPath":
     "./net_tissue_fast.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
-    "volume": "./t1_crop.nii.gz"
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
   },
   "mindgrab": {
     "net": mindgrab,
     "weightPath": "./net_mindgrab.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
-    "volume": "./t1_crop.nii.gz"
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
   },
   "t2": {
     "net": t2,
     "weightPath":
     "./net_t2.safetensors",
     "colormap": "./colormap_t2.json",
-    "volume": "./M2265_T2w.nii.gz"
+    "volume": "./M2265_T2w.nii.gz",
+    "normalization": "min-max"
   }
 }
 
 let selectedModel = models[document.getElementById("segmentationDropdown").value]
+
+function qnormalize(img32, qmin = 0.02, qmax = 0.98, eps = 1e-3) {
+  // Create sorted copy to find quantiles
+  const sorted = [...img32].sort((a, b) => a - b);
+  // Calculate quantile indices
+  const n = sorted.length;
+  const qminIndex = Math.floor(qmin * (n - 1));
+  const qmaxIndex = Math.floor(qmax * (n - 1));
+  // Linear interpolation for accurate quantiles
+  const qminFrac = qmin * (n - 1) - qminIndex;
+  const qmaxFrac = qmax * (n - 1) - qmaxIndex;
+  let qlow = sorted[qminIndex];
+  if (qminIndex < n - 1) {
+    qlow += qminFrac * (sorted[qminIndex + 1] - sorted[qminIndex]);
+  }
+  let qhigh = sorted[qmaxIndex];
+  if (qmaxIndex < n - 1) {
+    qhigh += qmaxFrac * (sorted[qmaxIndex + 1] - sorted[qmaxIndex]);
+  }
+  // Normalize and clip in-place
+  const scale = 1 / (qhigh - qlow + eps);
+  for (let i = 0; i < img32.length; i++) {
+    img32[i] = Math.max(0, Math.min(1, (img32[i] - qlow) * scale));
+  }
+}
 
 async function main() {
   clipCheck.onchange = function () {
@@ -131,18 +160,24 @@ async function main() {
 
     let img32 = convertInMemoryOrder(/*inverse*/ false, 256, new Float32Array(nv1.volumes[0].img))
 
-    // normalize input data to range 0..1
-    let mx = img32[0]
-    let mn = mx
-    for (let i = 0; i < img32.length; i++) {
-      mx = Math.max(mx, img32[i])
-      mn = Math.min(mn, img32[i])
+    if (selectedModel['normalization'] === 'min-max') {
+      console.log('normalizing using min-max')
+      // normalize input data to range 0..1
+      let mx = img32[0]
+      let mn = mx
+      for (let i = 0; i < img32.length; i++) {
+        mx = Math.max(mx, img32[i])
+        mn = Math.min(mn, img32[i])
+      }
+      let scale32 = 1 / (mx - mn)
+      for (let i = 0; i < img32.length; i++) {
+        img32[i] = (img32[i] - mn) * scale32
+      }
+    } else {
+      console.log('normalizing using qnormalization')
+      qnormalize(img32); 
     }
-    let scale32 = 1 / (mx - mn)
-    for (let i = 0; i < img32.length; i++) {
-      img32[i] = (img32[i] - mn) * scale32
-    }
-  
+
     const session = await selectedModel["net"].load(device, selectedModel["weightPath"]);
 
     const shape = [1, 1, 256, 256, 256]
