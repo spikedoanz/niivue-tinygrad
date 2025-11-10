@@ -4,6 +4,7 @@ import subcortical from "./net_subcortical.js"
 import tissue_fast from "./net_tissue_fast.js"
 import mindgrab from "./net_mindgrab.js"
 import t2 from "./net_t2.js"
+import DKatlas from "./net_DKatlas.js"
 
 const models = {
   "subcortical": {
@@ -18,6 +19,13 @@ const models = {
     "weightPath":
     "./net_tissue_fast.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "DKatlas": {
+    "net": DKatlas,
+    "weightPath": "./net_DKatlas.safetensors",
+    "colormap": "./colormap_DKatlas.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
   },
