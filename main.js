@@ -21,8 +21,8 @@ const models = {
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
-  },
-  "DKatlas": {
+  }, 
+  "DKatlas": { // this is in float16
     "net": DKatlas,
     "weightPath": "./net_DKatlas.safetensors",
     "colormap": "./colormap_DKatlas.json",
@@ -124,7 +124,7 @@ async function main() {
   const getDevice = async () => {
     if (!navigator.gpu) return false;
     const requiredLimits = {};
-    const maxBufferSize = 1409286144;
+    const maxBufferSize = 4294967200; // 4gb required for DKatlas
     requiredLimits.maxStorageBufferBindingSize = maxBufferSize;
     requiredLimits.maxBufferSize = maxBufferSize;
     const adapter = await navigator.gpu.requestAdapter();
