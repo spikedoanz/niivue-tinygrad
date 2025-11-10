@@ -113,12 +113,12 @@ async function main() {
       return
     }
     const nii2 = await nv1.conform(nii, false)
-    await nv1.removeVolume(nv1.volumes[0])
-    await nv1.addVolume(nii2)
+    nv1.removeVolume(nv1.volumes[0])
+    nv1.addVolume(nii2)
   }
   async function closeAllOverlays() {
     while (nv1.volumes.length > 1) {
-      await nv1.removeVolume(nv1.volumes[1])
+      nv1.removeVolume(nv1.volumes[1])
     }
   }
   const getDevice = async () => {
@@ -128,6 +128,9 @@ async function main() {
     requiredLimits.maxStorageBufferBindingSize = maxBufferSize;
     requiredLimits.maxBufferSize = maxBufferSize;
     const adapter = await navigator.gpu.requestAdapter();
+    console.log('Adapter limits:', adapter.limits);
+    console.log('Max buffer size:', adapter.limits.maxBufferSize);
+    console.log('Max storage buffer binding size:', adapter.limits.maxStorageBufferBindingSize);
     return await adapter.requestDevice({
         requiredLimits: requiredLimits,
         requiredFeatures: ["shader-f16"]
@@ -206,7 +209,7 @@ async function main() {
     const cmap = await fetchJSON(selectedModel["colormap"])
     segmentImg.setColormapLabel(cmap)
     segmentImg.opacity = opacitySlider1.value / 255
-    await nv1.addVolume(segmentImg)
+    nv1.addVolume(segmentImg)
     loadingCircle.classList.add('hidden')
     const elapsedTime = Date.now() - startTime
     document.getElementById("intensity").innerHTML = `${elapsedTime}ms to segment`
