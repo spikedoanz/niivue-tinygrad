@@ -1,11 +1,12 @@
 import { Niivue } from '@niivue/niivue'
-// IMPORTANT: we need to import this specific file. 
+// IMPORTANT: we need to import this specific file.
 import subcortical from "./net_subcortical.js"
 import subcortical30chan from "./net_subcortical30chan.js"
 import tissue_fast from "./net_tissue_fast.js"
 import mindgrab from "./net_mindgrab.js"
 import t2 from "./net_t2.js"
 import DKatlas from "./net_DKatlas.js"
+import aparc50 from "./net_aparc50.js"
 
 const models = {
   "subcortical": {
@@ -52,6 +53,14 @@ const models = {
     "colormap": "./colormap_t2.json",
     "volume": "./M2265_T2w.nii.gz",
     "normalization": "min-max"
+  },
+  "aparc50": {
+    "net": aparc50,
+    "weightPath": "./net_aparc50.safetensors",
+    "colormap": "./colormap_aparc50.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize",
+    "fp16": true
   }
 }
 
