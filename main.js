@@ -35,7 +35,8 @@ const models = {
     "weightPath": "./net_DKatlas.safetensors",
     "colormap": "./colormap_DKatlas.json",
     "volume": "./t1_crop.nii.gz",
-    "normalization": "min-max"
+    "normalization": "min-max",
+    "fp16": true  // requires Float16Array input
   },
   "mindgrab": {
     "net": mindgrab,
@@ -173,14 +174,20 @@ async function main() {
       return
     }
     const startTime = Date.now();
+    console.log('[Model] Starting segmentation...')
     loadingCircle.classList.remove('hidden')
+
+    console.log('[Model] Phase 1: Preparing volume (closing overlays, conforming)...')
     await closeAllOverlays()
     await ensureConformed()
+    console.log('[Model] Phase 1: Volume preparation complete')
 
+    console.log('[Model] Phase 2: Normalizing input data...')
     let img32 = convertInMemoryOrder(/*inverse*/ false, 256, new Float32Array(nv1.volumes[0].img))
 
+    console.log(selectedModel)
     if (selectedModel['normalization'] === 'min-max') {
-      console.log('normalizing using min-max')
+      console.log('[Model] Phase 2: Using min-max normalization')
       // normalize input data to range 0..1
       let mx = img32[0]
       let mn = mx
@@ -193,11 +200,14 @@ async function main() {
         img32[i] = (img32[i] - mn) * scale32
       }
     } else {
-      console.log('normalizing using qnormalization')
-      qnormalize(img32); 
+      console.log('[Model] Phase 2: Using quantile normalization')
+      qnormalize(img32);
     }
+    console.log('[Model] Phase 2: Normalization complete')
 
+    console.log('[Model] Phase 3: Loading model weights...')
     const session = await selectedModel["net"].load(device, selectedModel["weightPath"]);
+    console.log('[Model] Phase 3: Model weights loaded')
 
     const shape = [1, 1, 256, 256, 256]
     const nvox = shape.reduce((a, b) => a * b)
@@ -205,8 +215,33 @@ async function main() {
       throw new Error(`img32 length (${img32.length}) does not match expected tensor length (${expectedLength})`)
     }
 
-    const results = await session(img32);
-   
+    console.log('[Model] Phase 4: Running inference...')
+    // Convert to Float16Array if model requires fp16 input
+    let inputData = img32;
+    if (selectedModel['fp16']) {
+      console.log('[Model] Phase 4: Converting to Float16Array for fp16 model')
+      inputData = new Float16Array(img32);
+    }
+    const results = await session(inputData);
+    console.log('[Model] Phase 4: Inference complete')
+
+    // Log label distribution in output cube
+    const outputData = results[0];
+    const totalVoxels = outputData.length;
+    const labelCounts = {};
+    for (let i = 0; i < totalVoxels; i++) {
+      const label = Math.round(outputData[i]);
+      labelCounts[label] = (labelCounts[label] || 0) + 1;
+    }
+    console.log('[Model] Label distribution in output cube:');
+    const sortedLabels = Object.keys(labelCounts).sort((a, b) => a - b);
+    for (const label of sortedLabels) {
+      const count = labelCounts[label];
+      const ratio = (count / totalVoxels * 100).toFixed(2);
+      console.log(`  Label ${label}: ${count} voxels (${ratio}%)`);
+    }
+
+    console.log('[Model] Phase 5: Post-processing results...')
     let segmentImg = nv1.cloneVolume(0)
     segmentImg.img = convertInMemoryOrder(/*inverse*/ true, 256, results[0])
     segmentImg.hdr.datatypeCode = 16
@@ -218,8 +253,11 @@ async function main() {
     segmentImg.setColormapLabel(cmap)
     segmentImg.opacity = opacitySlider1.value / 255
     nv1.addVolume(segmentImg)
+    console.log('[Model] Phase 5: Post-processing complete')
+
     loadingCircle.classList.add('hidden')
     const elapsedTime = Date.now() - startTime
+    console.log(`[Model] Segmentation complete in ${elapsedTime}ms`)
     document.getElementById("intensity").innerHTML = `${elapsedTime}ms to segment`
   }
   function handleLocationChange(data) {
