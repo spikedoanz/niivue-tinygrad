@@ -3,6 +3,8 @@ import { Niivue } from '@niivue/niivue'
 import subcortical from "./net_subcortical.js"
 import subcortical30chan from "./net_subcortical30chan.js"
 import tissue_fast from "./net_tissue_fast.js"
+import tissue_fast_tta from "./net_tissue_fast_tta.js"
+import robust_tissue from "./net_robust_tissue.js"
 import mindgrab from "./net_mindgrab.js"
 import t2 from "./net_t2.js"
 import DKatlas from "./net_DKatlas.js"
@@ -30,7 +32,21 @@ const models = {
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
-  }, 
+  },
+  "tissue_fast_tta": {
+    "net": tissue_fast_tta,
+    "weightPath": "./net_tissue_fast_tta.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "robust_tissue": {
+    "net": robust_tissue,
+    "weightPath": "./net_robust_tissue.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
   "DKatlas": { // this is in float16
     "net": DKatlas,
     "weightPath": "./net_DKatlas.safetensors",
@@ -143,6 +159,7 @@ async function main() {
     if (!navigator.gpu) return false;
     const requiredLimits = {};
     const maxBufferSize = 4294967200; // 4gb required for DKatlas
+    //const maxBufferSize = 1294967200; // 4gb required for DKatlas
     requiredLimits.maxStorageBufferBindingSize = maxBufferSize;
     requiredLimits.maxBufferSize = maxBufferSize;
     const adapter = await navigator.gpu.requestAdapter();
