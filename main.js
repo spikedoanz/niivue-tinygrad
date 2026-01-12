@@ -5,6 +5,7 @@ import subcortical30chan from "./net_subcortical30chan.js"
 import tissue_fast from "./net_tissue_fast.js"
 import tissue_fast_tta from "./net_tissue_fast_tta.js"
 import robust_tissue from "./net_robust_tissue.js"
+import big_robust_tissue from "./net_big_robust_tissue.js"
 import mindgrab from "./net_mindgrab.js"
 import t2 from "./net_t2.js"
 import DKatlas from "./net_DKatlas.js"
@@ -43,6 +44,13 @@ const models = {
   "robust_tissue": {
     "net": robust_tissue,
     "weightPath": "./net_robust_tissue.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "big_robust_tissue": {
+    "net": big_robust_tissue,
+    "weightPath": "./net_big_robust_tissue.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
