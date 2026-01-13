@@ -1,6 +1,7 @@
 import { Niivue } from '@niivue/niivue'
 // IMPORTANT: we need to import this specific file.
 import subcortical from "./net_subcortical.js"
+import subcortical_tta from "./net_subcortical_tta.js"
 import subcortical30chan from "./net_subcortical30chan.js"
 import tissue_fast from "./net_tissue_fast.js"
 import tissue_fast_tta from "./net_tissue_fast_tta.js"
@@ -9,14 +10,24 @@ import robust_tissue_tta from "./net_robust_tissue_tta.js"
 import big_robust_tissue from "./net_big_robust_tissue.js"
 import big_robust_tissue_tta from "./net_big_robust_tissue_tta.js"
 import mindgrab from "./net_mindgrab.js"
+import mindgrab_tta from "./net_mindgrab_tta.js"
 import t2 from "./net_t2.js"
 import DKatlas from "./net_DKatlas.js"
+import DKatlas_tta from "./net_DKatlas_tta.js"
 import aparc50 from "./net_aparc50.js"
+import aparc50_tta from "./net_aparc50_tta.js"
 
 const models = {
   "subcortical": {
     "net": subcortical,
     "weightPath": "./net_subcortical.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_tta": {
+    "net": subcortical_tta,
+    "weightPath": "./net_subcortical_tta.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
@@ -79,9 +90,23 @@ const models = {
     "normalization": "min-max",
     "fp16": true  // requires Float16Array input
   },
+  "DKatlas_tta": {
+    "net": DKatlas_tta,
+    "weightPath": "./net_DKatlas_tta.safetensors",
+    "colormap": "./colormap_DKatlas.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
   "mindgrab": {
     "net": mindgrab,
     "weightPath": "./net_mindgrab.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "mindgrab_tta": {
+    "net": mindgrab_tta,
+    "weightPath": "./net_mindgrab_tta.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
@@ -101,6 +126,13 @@ const models = {
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize",
     "fp16": true
+  },
+  "aparc50_tta": {
+    "net": aparc50_tta,
+    "weightPath": "./net_aparc50_tta.safetensors",
+    "colormap": "./colormap_aparc50.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
   }
 }
 
