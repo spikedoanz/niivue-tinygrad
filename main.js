@@ -5,6 +5,9 @@ import subcortical_tta from "./net_subcortical_tta.js"
 import subcortical30chan from "./net_subcortical30chan.js"
 import tissue_fast from "./net_tissue_fast.js"
 import tissue_fast_tta from "./net_tissue_fast_tta.js"
+import tissue_fast_tta_coronal from "./net_tissue_fast_tta_coronal.js"
+import tissue_fast_tta_axial from "./net_tissue_fast_tta_axial.js"
+import tissue_fast_tta_all from "./net_tissue_fast_tta_all.js"
 import robust_tissue from "./net_robust_tissue.js"
 import robust_tissue_tta from "./net_robust_tissue_tta.js"
 import big_robust_tissue from "./net_big_robust_tissue.js"
@@ -50,6 +53,27 @@ const models = {
   "tissue_fast_tta": {
     "net": tissue_fast_tta,
     "weightPath": "./net_tissue_fast_tta.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "tissue_fast_tta_coronal": {
+    "net": tissue_fast_tta_coronal,
+    "weightPath": "./net_tissue_fast_tta_coronal.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "tissue_fast_tta_axial": {
+    "net": tissue_fast_tta_axial,
+    "weightPath": "./net_tissue_fast_tta_axial.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "tissue_fast_tta_all": {
+    "net": tissue_fast_tta_all,
+    "weightPath": "./net_tissue_fast_tta_all.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
