@@ -1,58 +1,48 @@
 import { Niivue } from '@niivue/niivue'
 // IMPORTANT: we need to import this specific file.
 import subcortical from "./net_subcortical.js"
-import subcortical_tta from "./net_subcortical_tta.js"
 import subcortical30chan from "./net_subcortical30chan.js"
+import subcortical_tta_sagittal from "./net_subcortical_tta_sagittal.js"
+import subcortical_tta_coronal from "./net_subcortical_tta_coronal.js"
+import subcortical_tta_axial from "./net_subcortical_tta_axial.js"
 import tissue_fast from "./net_tissue_fast.js"
-import tissue_fast_tta from "./net_tissue_fast_tta.js"
+import tissue_fast_tta_sagittal from "./net_tissue_fast_tta_sagittal.js"
 import tissue_fast_tta_coronal from "./net_tissue_fast_tta_coronal.js"
 import tissue_fast_tta_axial from "./net_tissue_fast_tta_axial.js"
 import tissue_fast_tta_all from "./net_tissue_fast_tta_all.js"
 import robust_tissue from "./net_robust_tissue.js"
-import robust_tissue_tta from "./net_robust_tissue_tta.js"
+import robust_tissue_tta_sagittal from "./net_robust_tissue_tta_sagittal.js"
+import robust_tissue_tta_coronal from "./net_robust_tissue_tta_coronal.js"
+import robust_tissue_tta_axial from "./net_robust_tissue_tta_axial.js"
 import big_robust_tissue from "./net_big_robust_tissue.js"
-import big_robust_tissue_tta from "./net_big_robust_tissue_tta.js"
+import big_robust_tissue_tta_sagittal from "./net_big_robust_tissue_tta_sagittal.js"
+import big_robust_tissue_tta_coronal from "./net_big_robust_tissue_tta_coronal.js"
+import big_robust_tissue_tta_axial from "./net_big_robust_tissue_tta_axial.js"
 import mindgrab from "./net_mindgrab.js"
-import mindgrab_tta from "./net_mindgrab_tta.js"
+import mindgrab_tta_sagittal from "./net_mindgrab_tta_sagittal.js"
+import mindgrab_tta_coronal from "./net_mindgrab_tta_coronal.js"
+import mindgrab_tta_axial from "./net_mindgrab_tta_axial.js"
 import t2 from "./net_t2.js"
 import DKatlas from "./net_DKatlas.js"
-import DKatlas_tta from "./net_DKatlas_tta.js"
+import DKatlas_tta_sagittal from "./net_DKatlas_tta_sagittal.js"
+import DKatlas_tta_coronal from "./net_DKatlas_tta_coronal.js"
+import DKatlas_tta_axial from "./net_DKatlas_tta_axial.js"
 import aparc50 from "./net_aparc50.js"
-import aparc50_tta from "./net_aparc50_tta.js"
+import aparc50_tta_sagittal from "./net_aparc50_tta_sagittal.js"
+import aparc50_tta_coronal from "./net_aparc50_tta_coronal.js"
+import aparc50_tta_axial from "./net_aparc50_tta_axial.js"
 
 const models = {
-  "subcortical": {
-    "net": subcortical,
-    "weightPath": "./net_subcortical.safetensors",
-    "colormap": "./colormap_tissue_subcortical.json",
-    "volume": "./t1_crop.nii.gz",
-    "normalization": "min-max"
-  },
-  "subcortical_tta": {
-    "net": subcortical_tta,
-    "weightPath": "./net_subcortical_tta.safetensors",
-    "colormap": "./colormap_tissue_subcortical.json",
-    "volume": "./t1_crop.nii.gz",
-    "normalization": "min-max"
-  },
-  "subcortical30chan": {
-    "net": subcortical30chan,
-    "weightPath": "./net_subcortical30chan.safetensors",
-    "colormap": "./colormap_tissue_subcortical.json",
-    "volume": "./t1_crop.nii.gz",
-    "normalization": "min-max"
-  },
   "tissue_fast": {
     "net": tissue_fast,
-    "weightPath":
-    "./net_tissue_fast.safetensors",
+    "weightPath": "./net_tissue_fast.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
   },
-  "tissue_fast_tta": {
-    "net": tissue_fast_tta,
-    "weightPath": "./net_tissue_fast_tta.safetensors",
+  "tissue_fast_tta_sagittal": {
+    "net": tissue_fast_tta_sagittal,
+    "weightPath": "./net_tissue_fast_tta_sagittal.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
@@ -85,9 +75,23 @@ const models = {
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
   },
-  "robust_tissue_tta": {
-    "net": robust_tissue_tta,
-    "weightPath": "./net_robust_tissue_tta.safetensors",
+  "robust_tissue_tta_sagittal": {
+    "net": robust_tissue_tta_sagittal,
+    "weightPath": "./net_robust_tissue_tta_sagittal.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "robust_tissue_tta_coronal": {
+    "net": robust_tissue_tta_coronal,
+    "weightPath": "./net_robust_tissue_tta_coronal.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "robust_tissue_tta_axial": {
+    "net": robust_tissue_tta_axial,
+    "weightPath": "./net_robust_tissue_tta_axial.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
@@ -99,24 +103,87 @@ const models = {
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
   },
-  "big_robust_tissue_tta": {
-    "net": big_robust_tissue_tta,
-    "weightPath": "./net_big_robust_tissue_tta.safetensors",
+  "big_robust_tissue_tta_sagittal": {
+    "net": big_robust_tissue_tta_sagittal,
+    "weightPath": "./net_big_robust_tissue_tta_sagittal.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
   },
-  "DKatlas": { // this is in float16
+  "big_robust_tissue_tta_coronal": {
+    "net": big_robust_tissue_tta_coronal,
+    "weightPath": "./net_big_robust_tissue_tta_coronal.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "big_robust_tissue_tta_axial": {
+    "net": big_robust_tissue_tta_axial,
+    "weightPath": "./net_big_robust_tissue_tta_axial.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "subcortical": {
+    "net": subcortical,
+    "weightPath": "./net_subcortical.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_tta_sagittal": {
+    "net": subcortical_tta_sagittal,
+    "weightPath": "./net_subcortical_tta_sagittal.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_tta_coronal": {
+    "net": subcortical_tta_coronal,
+    "weightPath": "./net_subcortical_tta_coronal.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_tta_axial": {
+    "net": subcortical_tta_axial,
+    "weightPath": "./net_subcortical_tta_axial.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical30chan": {
+    "net": subcortical30chan,
+    "weightPath": "./net_subcortical30chan.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "DKatlas": {
     "net": DKatlas,
     "weightPath": "./net_DKatlas.safetensors",
     "colormap": "./colormap_DKatlas.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max",
-    "fp16": true  // requires Float16Array input
+    "fp16": true
   },
-  "DKatlas_tta": {
-    "net": DKatlas_tta,
-    "weightPath": "./net_DKatlas_tta.safetensors",
+  "DKatlas_tta_sagittal": {
+    "net": DKatlas_tta_sagittal,
+    "weightPath": "./net_DKatlas_tta_sagittal.safetensors",
+    "colormap": "./colormap_DKatlas.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "DKatlas_tta_coronal": {
+    "net": DKatlas_tta_coronal,
+    "weightPath": "./net_DKatlas_tta_coronal.safetensors",
+    "colormap": "./colormap_DKatlas.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "DKatlas_tta_axial": {
+    "net": DKatlas_tta_axial,
+    "weightPath": "./net_DKatlas_tta_axial.safetensors",
     "colormap": "./colormap_DKatlas.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
@@ -128,20 +195,26 @@ const models = {
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
   },
-  "mindgrab_tta": {
-    "net": mindgrab_tta,
-    "weightPath": "./net_mindgrab_tta.safetensors",
+  "mindgrab_tta_sagittal": {
+    "net": mindgrab_tta_sagittal,
+    "weightPath": "./net_mindgrab_tta_sagittal.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
   },
-  "t2": {
-    "net": t2,
-    "weightPath":
-    "./net_t2.safetensors",
-    "colormap": "./colormap_t2.json",
-    "volume": "./M2265_T2w.nii.gz",
-    "normalization": "min-max"
+  "mindgrab_tta_coronal": {
+    "net": mindgrab_tta_coronal,
+    "weightPath": "./net_mindgrab_tta_coronal.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "mindgrab_tta_axial": {
+    "net": mindgrab_tta_axial,
+    "weightPath": "./net_mindgrab_tta_axial.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
   },
   "aparc50": {
     "net": aparc50,
@@ -151,12 +224,33 @@ const models = {
     "normalization": "qnormalize",
     "fp16": true
   },
-  "aparc50_tta": {
-    "net": aparc50_tta,
-    "weightPath": "./net_aparc50_tta.safetensors",
+  "aparc50_tta_sagittal": {
+    "net": aparc50_tta_sagittal,
+    "weightPath": "./net_aparc50_tta_sagittal.safetensors",
     "colormap": "./colormap_aparc50.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
+  },
+  "aparc50_tta_coronal": {
+    "net": aparc50_tta_coronal,
+    "weightPath": "./net_aparc50_tta_coronal.safetensors",
+    "colormap": "./colormap_aparc50.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "aparc50_tta_axial": {
+    "net": aparc50_tta_axial,
+    "weightPath": "./net_aparc50_tta_axial.safetensors",
+    "colormap": "./colormap_aparc50.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "t2": {
+    "net": t2,
+    "weightPath": "./net_t2.safetensors",
+    "colormap": "./colormap_t2.json",
+    "volume": "./M2265_T2w.nii.gz",
+    "normalization": "min-max"
   }
 }
 
