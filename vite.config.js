@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   root: '.',
-  base: './',
+  base: '/niivue-tinygrad/',
   server: {
     open: 'index.html',
   },
