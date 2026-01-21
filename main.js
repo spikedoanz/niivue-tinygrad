@@ -348,6 +348,22 @@ async function main() {
 
   const device = await getDevice();
 
+  // Buffer profiling monkeypatch
+  const bufferStats = { totalAllocated: 0, maxSingleBuffer: 0, count: 0 };
+  const _createBuffer = device.createBuffer.bind(device);
+  device.createBuffer = (descriptor) => {
+    bufferStats.totalAllocated += descriptor.size;
+    bufferStats.maxSingleBuffer = Math.max(bufferStats.maxSingleBuffer, descriptor.size);
+    bufferStats.count++;
+    return _createBuffer(descriptor);
+  };
+  window.bufferStats = bufferStats;
+  window.logBufferStats = () => console.log({
+    totalMB: (bufferStats.totalAllocated / 1024 / 1024).toFixed(2),
+    maxSingleMB: (bufferStats.maxSingleBuffer / 1024 / 1024).toFixed(2),
+    count: bufferStats.count
+  });
+
   function convertInMemoryOrder(inverse, size, data) {
     let output = new Float32Array(data.length)
     let it = 0;
