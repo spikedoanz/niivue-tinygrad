@@ -363,17 +363,17 @@ async function main() {
   }
   const getDevice = async () => {
     if (!navigator.gpu) return false;
-    const requiredLimits = {};
-    const maxBufferSize = 4294967200; // 4gb required for DKatlas
-    //const maxBufferSize = 1294967200; // 4gb required for DKatlas
-    requiredLimits.maxStorageBufferBindingSize = maxBufferSize;
-    requiredLimits.maxBufferSize = maxBufferSize;
     const adapter = await navigator.gpu.requestAdapter();
     console.log('Adapter limits:', adapter.limits);
     console.log('Max buffer size:', adapter.limits.maxBufferSize);
     console.log('Max storage buffer binding size:', adapter.limits.maxStorageBufferBindingSize);
+    const maxBufferSize = adapter.limits.maxBufferSize;
+    const maxStorageBufferBindingSize = adapter.limits.maxStorageBufferBindingSize;
     return await adapter.requestDevice({
-        requiredLimits: requiredLimits,
+        requiredLimits: {
+          maxBufferSize,
+          maxStorageBufferBindingSize,
+        },
         requiredFeatures: ["shader-f16"]
     });
   };
