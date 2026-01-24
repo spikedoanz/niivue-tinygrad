@@ -364,11 +364,19 @@ async function main() {
   const getDevice = async () => {
     if (!navigator.gpu) return false;
     const adapter = await navigator.gpu.requestAdapter();
+
+    // Allow simulating lower buffer limits via URL param: ?maxBufferMB=128
+    const params = new URLSearchParams(window.location.search);
+    const simulatedMaxMB = params.get('maxBufferMB');
+    const simulatedMax = simulatedMaxMB ? parseInt(simulatedMaxMB) * 1024 * 1024 : Infinity;
+
+    const maxBufferSize = Math.min(simulatedMax, adapter.limits.maxBufferSize);
+    const maxStorageBufferBindingSize = Math.min(simulatedMax, adapter.limits.maxStorageBufferBindingSize);
+
     console.log('Adapter limits:', adapter.limits);
-    console.log('Max buffer size:', adapter.limits.maxBufferSize);
-    console.log('Max storage buffer binding size:', adapter.limits.maxStorageBufferBindingSize);
-    const maxBufferSize = adapter.limits.maxBufferSize;
-    const maxStorageBufferBindingSize = adapter.limits.maxStorageBufferBindingSize;
+    console.log('Adapter max buffer size:', adapter.limits.maxBufferSize);
+    console.log('Requested max buffer size:', maxBufferSize, simulatedMaxMB ? `(simulated ${simulatedMaxMB}MB)` : '(using adapter max)');
+
     return await adapter.requestDevice({
         requiredLimits: {
           maxBufferSize,
