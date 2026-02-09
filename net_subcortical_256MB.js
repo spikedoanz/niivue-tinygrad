@@ -1,5 +1,5 @@
 
-const subcortical_256MB = (() => {
+const subcortical = (() => {
 const getTensorBuffer = (safetensorBuffer, tensorMetadata) => {
   return safetensorBuffer.subarray(...tensorMetadata.data_offsets);
 };
@@ -4413,7 +4413,7 @@ var<uniform> INFINITY : f32;
   data0_268435456[(alu57+50331651)] = ((alu421*val213)+(alu425*val214)+(alu429*val215)+(alu433*val216)+(alu437*val217)+(alu441*val218)+(alu445*val219)+(alu449*val220)+(alu453*val221)+(alu457*val222)+(alu461*val223)+(alu465*val224)+(alu469*val225)+(alu473*val226)+(alu477*val227)+(alu481*val228)+(alu485*val229)+(alu489*val230)+(alu493*val231)+(alu497*val232)+(alu501*val233)+(alu505*val234)+(alu509*val235)+(alu513*val236)+(alu517*val237)+(alu521*val238)+(alu525*val239)+(alu529*val240)+(alu533*val241)+(alu537*val242)+val243);
 }`;
 
-const r_262144_2_16_4_30n1 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+const r_262144_2_16_4_30 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_33554432:array<f32>;
@@ -5001,7 +5001,7 @@ var<uniform> INFINITY : f32;
   data0_33554432[(alu57+3)] = (((alu329-alu330)*val1)+((alu332-alu333)*val3)+((alu335-alu336)*val5)+((alu338-alu339)*val7)+((alu341-alu342)*val9)+((alu344-alu345)*val11)+((alu347-alu348)*val13)+((alu350-alu351)*val15)+((alu353-alu354)*val17)+((alu356-alu357)*val19)+((alu359-alu360)*val21)+((alu362-alu363)*val23)+((alu365-alu366)*val25)+((alu368-alu369)*val27)+((alu371-alu372)*val29)+((alu374-alu375)*val31)+((alu377-alu378)*val33)+((alu380-alu381)*val35)+((alu383-alu384)*val37)+((alu386-alu387)*val39)+((alu389-alu390)*val41)+((alu392-alu393)*val43)+((alu395-alu396)*val45)+((alu398-alu399)*val47)+((alu401-alu402)*val49)+((alu404-alu405)*val51)+((alu407-alu408)*val53)+((alu410-alu411)*val55)+((alu413-alu414)*val57)+((alu416-alu417)*val59)+val60);
 }`;
 
-const E_3145728_32_3n2 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
+const E_3145728_32_3 = `fn nan() -> f32 { let bits = 0xffffffffu; return bitcast<f32>(bits); }
 @group(0) @binding(0)
 var<uniform> INFINITY : f32;
 @group(0) @binding(1)var<storage,read_write>data0_301989888:array<f32>;
@@ -5541,7 +5541,7 @@ const setupNet = async (device, safetensor) => {
 
     const gpuReadBuffer0 = device.createBuffer({size:output0.size, usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ });
 
-    const kernels = [r_4_256_32_4_8_16_4_4_3_3_3, r_14_256_32_4_8_16_4_3_3_3, r_4_256_32_4_8_16_4_4_30_3_3_3, r_14_256_32_4_8_16_4_30_3_3_3, r_4_256_32_4_8_16_4_4_30_3_3_3n1, r_14_256_32_4_8_16_4_30_3_3_3n1, r_4_256_32_4_8_16_4_4_30_3_3_3n2, r_14_256_32_4_8_16_4_30_3_3_3n2, r_4_256_32_4_8_16_4_4_30_3_3_3n3, r_14_256_32_4_8_16_4_30_3_3_3n3, r_4_256_32_4_8_16_4_4_30_3_3_3n2, r_14_256_32_4_8_16_4_30_3_3_3n2, r_4_256_32_4_8_16_4_4_30_3_3_3n1, r_14_256_32_4_8_16_4_30_3_3_3n1, r_4_256_32_4_8_16_4_4_30_3_3_3, r_14_256_32_4_8_16_4_30_3_3_3, r_4_256_32_4_8_16_4_4_30_3_3_3n4, r_14_256_32_4_8_16_4_30_3_3_3n4, r_262144_4_16_4_4_30, r_262144_2_16_4_30n1, E_3145728_32_3n2, E_131072_32_4n1, E_131072_32_4n2, E_131072_32_4n3];
+    const kernels = [r_4_256_32_4_8_16_4_4_3_3_3, r_14_256_32_4_8_16_4_3_3_3, r_4_256_32_4_8_16_4_4_30_3_3_3, r_14_256_32_4_8_16_4_30_3_3_3, r_4_256_32_4_8_16_4_4_30_3_3_3n1, r_14_256_32_4_8_16_4_30_3_3_3n1, r_4_256_32_4_8_16_4_4_30_3_3_3n2, r_14_256_32_4_8_16_4_30_3_3_3n2, r_4_256_32_4_8_16_4_4_30_3_3_3n3, r_14_256_32_4_8_16_4_30_3_3_3n3, r_4_256_32_4_8_16_4_4_30_3_3_3n2, r_14_256_32_4_8_16_4_30_3_3_3n2, r_4_256_32_4_8_16_4_4_30_3_3_3n1, r_14_256_32_4_8_16_4_30_3_3_3n1, r_4_256_32_4_8_16_4_4_30_3_3_3, r_14_256_32_4_8_16_4_30_3_3_3, r_4_256_32_4_8_16_4_4_30_3_3_3n4, r_14_256_32_4_8_16_4_30_3_3_3n4, r_262144_4_16_4_4_30, r_262144_2_16_4_30, E_3145728_32_3, E_131072_32_4n1, E_131072_32_4n2, E_131072_32_4n3];
     const pipelines = await Promise.all(kernels.map(async (name, i) => {
       return await device.createComputePipelineAsync({
           layout: device.createPipelineLayout({
@@ -5557,38 +5557,106 @@ const setupNet = async (device, safetensor) => {
   }))
 
     return async (_input0) => {
-        const commandEncoder = device.createCommandEncoder();
+        let commandEncoder = device.createCommandEncoder();
         await gpuWriteBuffer0.mapAsync(GPUMapMode.WRITE);
         new Float32Array(gpuWriteBuffer0.getMappedRange()).set(_input0);
         gpuWriteBuffer0.unmap();
         commandEncoder.copyBufferToBuffer(gpuWriteBuffer0, 0, input0, 0, gpuWriteBuffer0.size);
         addComputePass(device, commandEncoder, pipelines[0], layouts[0], infinityBuf, [buf_0, input0, buf_1, buf_2], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[1], layouts[1], infinityBuf, [buf_3, input0, buf_1, buf_2], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[2], layouts[2], infinityBuf, [buf_4, buf_0, buf_3, buf_5, buf_6], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[3], layouts[3], infinityBuf, [buf_7, buf_0, buf_3, buf_5, buf_6], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[4], layouts[4], infinityBuf, [buf_8, buf_4, buf_7, buf_9, buf_10], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[5], layouts[5], infinityBuf, [buf_11, buf_4, buf_7, buf_9, buf_10], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[6], layouts[6], infinityBuf, [buf_12, buf_8, buf_11, buf_13, buf_14], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[7], layouts[7], infinityBuf, [buf_15, buf_8, buf_11, buf_13, buf_14], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[8], layouts[8], infinityBuf, [buf_16, buf_12, buf_15, buf_17, buf_18], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[9], layouts[9], infinityBuf, [buf_19, buf_12, buf_15, buf_17, buf_18], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[10], layouts[10], infinityBuf, [buf_20, buf_16, buf_19, buf_21, buf_22], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[11], layouts[11], infinityBuf, [buf_23, buf_16, buf_19, buf_21, buf_22], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[12], layouts[12], infinityBuf, [buf_24, buf_20, buf_23, buf_25, buf_26], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[13], layouts[13], infinityBuf, [buf_27, buf_20, buf_23, buf_25, buf_26], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[14], layouts[14], infinityBuf, [buf_28, buf_24, buf_27, buf_29, buf_30], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[15], layouts[15], infinityBuf, [buf_31, buf_24, buf_27, buf_29, buf_30], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[16], layouts[16], infinityBuf, [buf_32, buf_28, buf_31, buf_33, buf_34], [128, 256, 4]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[17], layouts[17], infinityBuf, [buf_35, buf_28, buf_31, buf_33, buf_34], [128, 256, 14]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[18], layouts[18], infinityBuf, [buf_36, buf_32, buf_35, buf_37, buf_38], [32768, 8, 1]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[19], layouts[19], infinityBuf, [buf_39, buf_32, buf_35, buf_37, buf_38], [32768, 8, 1]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[20], layouts[20], infinityBuf, [buf_40, buf_36, buf_39], [49152, 64, 1]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[21], layouts[21], infinityBuf, [buf_41, buf_40], [32768, 4, 1]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[22], layouts[22], infinityBuf, [buf_42, buf_40], [32768, 4, 1]);
+        device.queue.submit([commandEncoder.finish()]);
+        await device.queue.onSubmittedWorkDone();
+        commandEncoder = device.createCommandEncoder();
         addComputePass(device, commandEncoder, pipelines[23], layouts[23], infinityBuf, [output0, buf_41, buf_40, buf_42], [32768, 4, 1]);
         commandEncoder.copyBufferToBuffer(output0, 0, gpuReadBuffer0, 0, output0.size);
-        const gpuCommands = commandEncoder.finish();
-        device.queue.submit([gpuCommands]);
+        device.queue.submit([commandEncoder.finish()]);
 
         await gpuReadBuffer0.mapAsync(GPUMapMode.READ);
         const resultBuffer0 = new Float32Array(gpuReadBuffer0.size/4);
@@ -5600,4 +5668,4 @@ const setupNet = async (device, safetensor) => {
 const load = async (device, weight_path) => { return await fetch(weight_path).then(x => x.arrayBuffer()).then(x => setupNet(device, new Uint8Array(x))); }
 return { load, setupNet };
 })();
-export default subcortical_256MB;
+export default subcortical;
