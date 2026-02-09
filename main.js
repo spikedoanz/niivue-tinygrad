@@ -24,6 +24,11 @@ import big_robust_tissue_tta_sagittal from "./net_big_robust_tissue_tta_sagittal
 import big_robust_tissue_tta_coronal from "./net_big_robust_tissue_tta_coronal.js"
 import big_robust_tissue_tta_axial from "./net_big_robust_tissue_tta_axial.js"
 import mindgrab from "./net_mindgrab.js"
+import mindgrab_64MB from "./net_mindgrab_64MB.js"
+import mindgrab_128MB from "./net_mindgrab_128MB.js"
+import mindgrab_256MB from "./net_mindgrab_256MB.js"
+import mindgrab_512MB from "./net_mindgrab_512MB.js"
+import mindgrab_1GB from "./net_mindgrab_1GB.js"
 import mindgrab_tta_sagittal from "./net_mindgrab_tta_sagittal.js"
 import mindgrab_tta_coronal from "./net_mindgrab_tta_coronal.js"
 import mindgrab_tta_axial from "./net_mindgrab_tta_axial.js"
@@ -231,6 +236,41 @@ const models = {
   "mindgrab": {
     "net": mindgrab,
     "weightPath": "./net_mindgrab.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "mindgrab_64MB": {
+    "net": mindgrab_64MB,
+    "weightPath": "./net_mindgrab_64MB.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "mindgrab_128MB": {
+    "net": mindgrab_128MB,
+    "weightPath": "./net_mindgrab_128MB.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "mindgrab_256MB": {
+    "net": mindgrab_256MB,
+    "weightPath": "./net_mindgrab_256MB.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "mindgrab_512MB": {
+    "net": mindgrab_512MB,
+    "weightPath": "./net_mindgrab_512MB.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "qnormalize"
+  },
+  "mindgrab_1GB": {
+    "net": mindgrab_1GB,
+    "weightPath": "./net_mindgrab_1GB.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "qnormalize"
