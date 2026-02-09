@@ -1,6 +1,11 @@
 import { Niivue } from '@niivue/niivue'
 // IMPORTANT: we need to import this specific file.
 import subcortical from "./net_subcortical.js"
+import subcortical_64MB from "./net_subcortical_64MB.js"
+import subcortical_128MB from "./net_subcortical_128MB.js"
+import subcortical_256MB from "./net_subcortical_256MB.js"
+import subcortical_512MB from "./net_subcortical_512MB.js"
+import subcortical_1GB from "./net_subcortical_1GB.js"
 import subcortical30chan from "./net_subcortical30chan.js"
 import subcortical_tta_sagittal from "./net_subcortical_tta_sagittal.js"
 import subcortical_tta_coronal from "./net_subcortical_tta_coronal.js"
@@ -172,6 +177,41 @@ const models = {
   "subcortical": {
     "net": subcortical,
     "weightPath": "./net_subcortical.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_64MB": {
+    "net": subcortical_64MB,
+    "weightPath": "./net_subcortical_64MB.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_128MB": {
+    "net": subcortical_128MB,
+    "weightPath": "./net_subcortical_128MB.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_256MB": {
+    "net": subcortical_256MB,
+    "weightPath": "./net_subcortical_256MB.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_512MB": {
+    "net": subcortical_512MB,
+    "weightPath": "./net_subcortical_512MB.safetensors",
+    "colormap": "./colormap_tissue_subcortical.json",
+    "volume": "./t1_crop.nii.gz",
+    "normalization": "min-max"
+  },
+  "subcortical_1GB": {
+    "net": subcortical_1GB,
+    "weightPath": "./net_subcortical_1GB.safetensors",
     "colormap": "./colormap_tissue_subcortical.json",
     "volume": "./t1_crop.nii.gz",
     "normalization": "min-max"
